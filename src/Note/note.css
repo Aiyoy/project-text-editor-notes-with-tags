@@ -35,7 +35,7 @@
   width: 30px;
   height: 30px;
   background-size: cover;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 .note-btns_edit:hover,
 .note-btns_trash:hover {
@@ -49,7 +49,7 @@
   background-image: url(../assets/edit.png);
 }
 .note-btns_trash {
-  background-image: url(../assets/close.png);
+  background-image: url(../assets/delete.png);
 }
 
 .note-content {

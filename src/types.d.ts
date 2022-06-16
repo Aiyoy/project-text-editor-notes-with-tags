@@ -1,5 +1,15 @@
 interface INote {
+  id: string;
   title: string;
   content: string;
-  tags: string[];
+  tags: ITag[];
 }
+
+interface ITag {
+  id: string;
+  tag: string;
+}
+
+type noteInitialState = {
+  notes: INote[];
+};

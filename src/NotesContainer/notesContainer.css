@@ -4,4 +4,5 @@
   flex-wrap: wrap;
   justify-content: space-around;
   column-gap: 25px;
+  align-items: flex-start;
 }

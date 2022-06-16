@@ -1,18 +1,14 @@
 import { nanoid } from 'nanoid';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Note from '../Note/Note';
+import { selectNotes } from '../Redux/noteSlice';
 
 import './notesContainer.css';
 
-const notes: INote[] = [
-  {
-    title: 'NewNote',
-    content: 'This is test note',
-    tags: ['firstNote', 'tag', 'test'],
-  },
-];
-
 const NoteContainer = (): JSX.Element => {
+  const notes = useSelector(selectNotes);
+
   return (
     <>
       <div className="notes-container">
