@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import noteSlice from './noteSlice';
+import searchSlice from './searchSlice';
 
 export const store = configureStore({
   reducer: {
     notes: noteSlice,
+    search: searchSlice,
   },
 });
 

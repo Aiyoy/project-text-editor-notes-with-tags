@@ -6,7 +6,14 @@ import { nanoid } from 'nanoid';
 import Tag from '../Tag/Tag';
 import { addNote, updateNote } from '../Redux/noteSlice';
 import { AppDispatch } from '../Redux/store';
-import { formType, formBTNType, formLabel, errorText, tagType } from '../Constants/constants';
+import {
+  formType,
+  formBTNType,
+  formLabel,
+  formPlaceholder,
+  errorText,
+  tagType,
+} from '../Constants/constants';
 
 import './noteForm.css';
 
@@ -90,7 +97,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
             <br />
             <input
               className="form-input"
-              placeholder={formLabel.title}
+              placeholder={formPlaceholder.title}
               value={title}
               type="text"
               {...register('title', {
@@ -110,7 +117,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
             <br />
             <textarea
               className="form-textarea"
-              placeholder={formLabel.content}
+              placeholder={formPlaceholder.content}
               value={content}
               {...register('content', {
                 required: true,
@@ -129,7 +136,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
             <br />
             <input
               className="form-input"
-              placeholder={formLabel.tags}
+              placeholder={formPlaceholder.tags}
               value={tag}
               type="text"
               onChange={(e) => {
@@ -143,7 +150,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
 
         <div className="tags-wrapper">
           {!!tags.length &&
-            tags.map((tag: ITag, index: number) => {
+            tags.map((tag: ITag) => {
               return (
                 <Tag
                   key={nanoid()}

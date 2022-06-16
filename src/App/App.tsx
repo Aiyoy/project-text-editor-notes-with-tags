@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import NoteContainer from '../NotesContainer/NotesConteiner';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import NoteForm from '../NoteForm/NoteForm';
+import SearchBar from '../SearchBar/SearchBar';
 
 import { addNoteText, formType } from '../Constants/constants';
 
@@ -21,6 +22,7 @@ const App = (): JSX.Element => {
     <>
       <Header />
       <div className="main-container">
+        <SearchBar />
         <NoteContainer />
         <div className="note-add" onClick={() => setModalOpen(true)}>
           {addNoteText}

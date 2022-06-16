@@ -13,3 +13,7 @@ interface ITag {
 type noteInitialState = {
   notes: INote[];
 };
+
+type searchInitialState = {
+  tags: ITag[];
+};

@@ -12,8 +12,14 @@ export const formLabel = {
   content: 'Content',
   tags: 'Tags',
 };
+export const formPlaceholder = {
+  title: 'Enter title',
+  content: 'Enter content',
+  tags: 'Enter tags (using spacebar)',
+};
 export const errorText = 'Field must be filled';
 export const tagType = {
   delete: 'delete',
   withoutDelete: 'withoutDelete',
 };
+export const searchPlaceholder = 'Enter tags for searching (using spacebar)';
