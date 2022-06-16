@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Shadows+Into+Light&display=swap');
 
 .header {
-  background: linear-gradient(270deg, #6cccff, #3bbbff);
+  background: linear-gradient(90deg, #3c3c3c, #222222);
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   padding-left: 30px;
   padding-right: 30px;
   align-items: center;

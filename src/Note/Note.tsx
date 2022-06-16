@@ -1,23 +1,31 @@
-import { useState } from 'react';
+import { nanoid } from 'nanoid';
 
-const Header = (): JSX.Element => {
-  const [navbar, setNavbar] = useState<boolean>(false);
+import Tag from '../Tag/Tag';
 
-  const setActiveNavbar = () => {
-    if (window.scrollY >= 100) {
-      setNavbar(true);
-    } else {
-      setNavbar(false);
-    }
-  };
+import './note.css';
 
-  window.addEventListener('scroll', setActiveNavbar);
-
+const Note = (props: { noteInf: INote }): JSX.Element => {
+  const tags: string[] = props.noteInf.tags;
   return (
-    <header className={navbar ? 'header header__active' : 'header'}>
-      <div className="header_logo"></div>
-    </header>
+    <>
+      <div className="note-container">
+        <div className="wrapper">
+          <div className="note-title">{props.noteInf.title}</div>
+          <div className="note-btns">
+            <div className="note-btns_edit"></div>
+            <div className="note-btns_trash"></div>
+          </div>
+        </div>
+        <div className="note-content">{props.noteInf.content}</div>
+        <div className="note-tags">
+          {!!tags.length &&
+            tags.map((tag: string) => {
+              return <Tag key={nanoid()} tag={tag} />;
+            })}
+        </div>
+      </div>
+    </>
   );
 };
 
-export default Header;
+export default Note;
