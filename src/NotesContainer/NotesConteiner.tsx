@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import { useSelector } from 'react-redux';
 
 import Note from '../Note/Note';
+import { searchError } from '../Constants/constants';
 import { selectNotes } from '../Redux/noteSlice';
 import { selectTags } from '../Redux/searchSlice';
 
@@ -36,6 +37,7 @@ const NoteContainer = (): JSX.Element => {
           filteredNotes.map((note: INote) => {
             return <Note key={nanoid()} noteInf={note} />;
           })}
+        {!filteredNotes.length && <div>{searchError}</div>}
       </div>
     </>
   );

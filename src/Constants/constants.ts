@@ -23,3 +23,4 @@ export const tagType = {
   withoutDelete: 'withoutDelete',
 };
 export const searchPlaceholder = 'Enter tags for searching (using spacebar)';
+export const searchError = 'No results found for your search';
