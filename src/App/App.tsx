@@ -1,4 +1,7 @@
 import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+
+import './app.css';
 
 const App = (): JSX.Element => {
   const text = 'Hello world';
@@ -7,6 +10,7 @@ const App = (): JSX.Element => {
     <>
       <Header />
       <div className="toast-message">{text}</div>
+      <Footer />
     </>
   );
 };

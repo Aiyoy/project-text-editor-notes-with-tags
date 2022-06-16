@@ -1,0 +1,9 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100vh;
+  color: #131313;
+  font-size: 20px;
+  font-weight: 400;
+}

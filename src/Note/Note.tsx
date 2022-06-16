@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 const Header = (): JSX.Element => {
   const [navbar, setNavbar] = useState<boolean>(false);

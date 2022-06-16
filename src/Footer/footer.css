@@ -1,0 +1,21 @@
+.footer {
+  position: fixed;
+  z-index: 100;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+  align-items: center;
+  background: linear-gradient(90deg, #6cccff, #3bbbff);
+  display: flex;
+  color: #ffffff;
+}
+
+.footer_link {
+  text-decoration: none;
+  color: #ffffff;
+}
+.footer_link:hover {
+  text-decoration: underline;
+}
