@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
+import reactStringReplace from 'react-string-replace';
 
 import Tag from '../Tag/Tag';
 import { addNote, updateNote, selectNotes } from '../Redux/noteSlice';
@@ -57,15 +58,28 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
 
   const [tag, setTag] = useState<string>('');
 
+  const [isTitleActive, setIsTitleActive] = useState<boolean>(false);
+  const [isContentActive, setIsContentActive] = useState<boolean>(false);
+
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleSubmite = async (data: INote) => {
+  const handleSubmite = async () => {
     const newNote: INote = {
       id: id,
-      title: data.title,
-      content: data.content,
+      title: title,
+      content: content,
       tags: tags,
     };
+
+    if (props.type === formType.add) {
+      localStorage.setItem('Notes', JSON.stringify(notes.concat(newNote)));
+    } else {
+      const index = notes.findIndex((note: INote) => note.id === id);
+      const updateNotes = notes.slice();
+      updateNotes[index] = newNote;
+      localStorage.setItem('Notes', JSON.stringify(updateNotes));
+    }
+
     if (props.type === formType.add) {
       await dispatch(addNote(newNote));
     } else {
@@ -73,8 +87,6 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
     }
     reset();
     clearErrors();
-
-    localStorage.setItem('Notes', JSON.stringify(notes.concat(newNote)));
   };
 
   const onKeyPressHandler = (event: React.KeyboardEvent<Element>) => {
@@ -125,38 +137,56 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
           <label className="form-label">
             {formLabel.title}
             <br />
-            <input
-              className="form-input"
-              placeholder={formPlaceholder.title}
-              value={title}
-              type="text"
-              {...register('title', {
-                required: true,
-                onChange: (e) => {
-                  setTitle(e.target.value);
-                },
-              })}
-            />
+            {props.type === formType.edit && !isTitleActive ? (
+              <div className="pseudo-input" onClick={() => setIsTitleActive(true)}>
+                {title}
+              </div>
+            ) : (
+              <input
+                className="form-input"
+                placeholder={formPlaceholder.title}
+                value={title}
+                type="text"
+                {...register('title', {
+                  required: true,
+                  onChange: (e) => {
+                    setTitle(e.target.value);
+                  },
+                })}
+                onBlur={() => setIsTitleActive(false)}
+              />
+            )}
           </label>
           {errors.title && <p className="error">{errorText}</p>}
         </div>
 
         <div className="form-element-wrapper">
           <label className="form-label">
-            {formLabel.content}
-            <br />
-            <textarea
-              className="form-textarea"
-              placeholder={formPlaceholder.content}
-              value={content}
-              {...register('content', {
-                required: true,
-                onChange: (e) => {
-                  setContent(e.target.value);
-                },
-              })}
-              onBlur={selectTagFromText}
-            />
+            {props.type === formType.edit && !isContentActive ? (
+              <div className="pseudo-textarea" onClick={() => setIsContentActive(true)}>
+                {reactStringReplace(content, /#(\w+)/g, (match, i) => (
+                  <span key={nanoid()} className="tag">
+                    #{match}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <textarea
+                className="form-textarea"
+                placeholder={formPlaceholder.content}
+                value={content}
+                {...register('content', {
+                  required: true,
+                  onChange: (e) => {
+                    setContent(e.target.value);
+                  },
+                })}
+                onBlur={() => {
+                  selectTagFromText();
+                  setIsContentActive(false);
+                }}
+              />
+            )}
           </label>
           {errors.content && <p className="error">{errorText}</p>}
         </div>

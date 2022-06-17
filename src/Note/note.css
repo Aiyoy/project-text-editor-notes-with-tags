@@ -4,6 +4,7 @@
   background-color: #e8e8e8;
   border-radius: 3px;
   padding: 10px;
+  margin-bottom: 25px;
   -webkit-box-shadow: 2px 2px 7px 0px rgba(34, 34, 34, 0.3);
   -moz-box-shadow: 2px 2px 7px 0px rgba(34, 34, 34, 0.3);
   box-shadow: 2px 2px 7px 0px rgba(34, 34, 34, 0.3);
@@ -14,7 +15,7 @@
   justify-content: space-between;
   column-gap: 10px;
   border-bottom: 2px solid #ffffff;
-  height: 40px;
+  min-height: 40px;
   line-height: 40px;
   margin-bottom: 10px;
   align-items: center;
@@ -63,6 +64,7 @@
 .note-tags {
   display: flex;
   justify-content: flex-start;
+  flex-wrap: wrap;
   column-gap: 10px;
 }
 

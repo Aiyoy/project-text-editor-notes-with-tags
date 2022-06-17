@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import reactStringReplace from 'react-string-replace';
 import { nanoid } from 'nanoid';
 
@@ -7,7 +7,7 @@ import ModalWindow from '../ModalWindow/ModalWindow';
 import NoteForm from '../NoteForm/NoteForm';
 import Tag from '../Tag/Tag';
 import { tagType, formType } from '../Constants/constants';
-import { deleteNote } from '../Redux/noteSlice';
+import { deleteNote, selectNotes } from '../Redux/noteSlice';
 import { AppDispatch } from '../Redux/store';
 
 import './note.css';
@@ -15,11 +15,16 @@ import './note.css';
 const Note = (props: { noteInf: INote }): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
+  const notes: INote[] = useSelector(selectNotes);
+
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
   const tags: ITag[] = props.noteInf.tags;
 
   const handleDelete = async () => {
+    const filterNotes = notes.filter((note: INote) => note.id !== props.noteInf.id);
+    localStorage.setItem('Notes', JSON.stringify(filterNotes));
+
     await dispatch(deleteNote(props.noteInf.id));
   };
 
