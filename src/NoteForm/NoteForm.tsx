@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { nanoid } from 'nanoid';
-import reactStringReplace from 'react-string-replace';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Tag from '../Tag/Tag';
@@ -58,8 +57,6 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
 
   const [tag, setTag] = useState<string>('');
 
-  const [formatedText, setFormatedText] = useState<string>('');
-
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmite = async (data: INote) => {
@@ -86,7 +83,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
         id: nanoid(),
         tag: tag,
       };
-      setTags([...tags, newTag]);
+      setTags(unique([...tags, newTag]));
       setTag('');
     }
   };
@@ -96,26 +93,29 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
     setTags(filterTags);
   };
 
-  const transformText = (): void => {
-    const replacedText = reactStringReplace(content, /#(\w+)/g, (match, i) => (
-      <span className="tag">#{match}</span>
-    ));
-
-    let text: any = '';
-
-    replacedText.forEach((word: any) => {
-      text += word;
+  const selectTagFromText = (): void => {
+    let contentArr: string[] = content.split(' ');
+    contentArr = contentArr.filter((word: string) => /#(\w+)/g.exec(word));
+    const tagsFromText: ITag[] = contentArr.map((word: string) => {
+      return {
+        id: nanoid(),
+        tag: word.slice(1),
+      };
     });
-    // const contentArr: string[] = content.split(' ');
-    // const formatedContent = contentArr
-    //   .map((word: string) => {
-    //     const formatedWord = word.startsWith('#') ? '<span className="tag">word</span>' : word;
-    //     console.log(formatedWord);
-    //     return formatedWord;
-    //   })
-    //   .join(' ');
-    console.log(text);
-    // setFormatedText(replacedText.join(' '));
+    setTags(unique([...tags, ...tagsFromText]));
+  };
+
+  const unique = (arr: ITag[]) => {
+    const result: string[] = [];
+    const resultTags: ITag[] = [];
+
+    for (const str of arr) {
+      if (!result.includes(str.tag)) {
+        result.push(str.tag);
+        resultTags.push(str);
+      }
+    }
+    return resultTags;
   };
 
   return (
@@ -155,7 +155,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
                   setContent(e.target.value);
                 },
               })}
-              onBlur={transformText}
+              onBlur={selectTagFromText}
             />
           </label>
           {errors.content && <p className="error">{errorText}</p>}

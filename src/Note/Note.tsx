@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import reactStringReplace from 'react-string-replace';
+import { nanoid } from 'nanoid';
 
 import ModalWindow from '../ModalWindow/ModalWindow';
 import NoteForm from '../NoteForm/NoteForm';
@@ -35,7 +37,13 @@ const Note = (props: { noteInf: INote }): JSX.Element => {
             <div className="note-btns_trash" onClick={handleDelete}></div>
           </div>
         </div>
-        <div className="note-content">{props.noteInf.content}</div>
+        <div className="note-content">
+          {reactStringReplace(props.noteInf.content, /#(\w+)/g, (match, i) => (
+            <span key={nanoid()} className="tag">
+              #{match}
+            </span>
+          ))}
+        </div>
         <div className="note-tags">
           {tags.length > 0 &&
             tags.map((tag: ITag) => {

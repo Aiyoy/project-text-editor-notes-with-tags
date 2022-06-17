@@ -65,3 +65,7 @@
   justify-content: flex-start;
   column-gap: 10px;
 }
+
+.tag {
+  color: rgb(0, 200, 255);
+}

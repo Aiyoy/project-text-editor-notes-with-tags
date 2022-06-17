@@ -36,12 +36,7 @@ const NoteContainer = (): JSX.Element => {
     if (localStorage.getItem('Notes') && localStorage.getItem('Notes') !== '[]') {
       const notesLS = JSON.parse(localStorage.getItem('Notes') as string);
       dispatch(addNotes(notesLS));
-      console.log('start', localStorage.getItem('Notes'));
     }
-
-    // return (): void => {
-    //   localStorage.setItem('Notes', JSON.stringify(notes));
-    // };
   }, [dispatch]);
 
   return (
