@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
+import reactStringReplace from 'react-string-replace';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Tag from '../Tag/Tag';
-import { addNote, updateNote } from '../Redux/noteSlice';
+import { addNote, updateNote, selectNotes } from '../Redux/noteSlice';
 import { AppDispatch } from '../Redux/store';
 import {
   formType,
@@ -18,6 +20,8 @@ import {
 import './noteForm.css';
 
 const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
+  const notes: INote[] = useSelector(selectNotes);
+
   const {
     register,
     handleSubmit,
@@ -54,6 +58,8 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
 
   const [tag, setTag] = useState<string>('');
 
+  const [formatedText, setFormatedText] = useState<string>('');
+
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmite = async (data: INote) => {
@@ -70,6 +76,8 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
     }
     reset();
     clearErrors();
+
+    localStorage.setItem('Notes', JSON.stringify(notes.concat(newNote)));
   };
 
   const onKeyPressHandler = (event: React.KeyboardEvent<Element>) => {
@@ -86,6 +94,28 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
   const handleTagDelete = (id: string) => {
     const filterTags = tags.filter((tag: ITag) => tag.id !== id);
     setTags(filterTags);
+  };
+
+  const transformText = (): void => {
+    const replacedText = reactStringReplace(content, /#(\w+)/g, (match, i) => (
+      <span className="tag">#{match}</span>
+    ));
+
+    let text: any = '';
+
+    replacedText.forEach((word: any) => {
+      text += word;
+    });
+    // const contentArr: string[] = content.split(' ');
+    // const formatedContent = contentArr
+    //   .map((word: string) => {
+    //     const formatedWord = word.startsWith('#') ? '<span className="tag">word</span>' : word;
+    //     console.log(formatedWord);
+    //     return formatedWord;
+    //   })
+    //   .join(' ');
+    console.log(text);
+    // setFormatedText(replacedText.join(' '));
   };
 
   return (
@@ -125,6 +155,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
                   setContent(e.target.value);
                 },
               })}
+              onBlur={transformText}
             />
           </label>
           {errors.content && <p className="error">{errorText}</p>}

@@ -13,6 +13,9 @@ const noteSlice = createSlice({
     addNote(state: noteInitialState, action: { payload: INote; type: string }) {
       state.notes = [...state.notes, action.payload];
     },
+    addNotes(state: noteInitialState, action: { payload: INote[]; type: string }) {
+      state.notes = [...action.payload];
+    },
     deleteNote(state: noteInitialState, action: { payload: string; type: string }) {
       const filterNotes = state.notes.filter((note: INote) => note.id !== action.payload);
       state.notes = filterNotes;
@@ -24,7 +27,7 @@ const noteSlice = createSlice({
   },
 });
 
-export const { addNote, deleteNote, updateNote } = noteSlice.actions;
+export const { addNote, addNotes, deleteNote, updateNote } = noteSlice.actions;
 
 export const selectNotes = (state: RootState): INote[] => state.notes.notes;
 

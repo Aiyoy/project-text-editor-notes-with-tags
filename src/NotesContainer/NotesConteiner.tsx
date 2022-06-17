@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Note from '../Note/Note';
 import { searchError } from '../Constants/constants';
-import { selectNotes } from '../Redux/noteSlice';
+import { selectNotes, addNotes } from '../Redux/noteSlice';
 import { selectTags } from '../Redux/searchSlice';
 
 import './notesContainer.css';
 
 const NoteContainer = (): JSX.Element => {
+  const dispatch = useDispatch();
+
   const notes: INote[] = useSelector(selectNotes);
   const tags: ITag[] = useSelector(selectTags);
   const [filteredNotes, setFilteredNotes] = useState<INote[]>(notes);
@@ -29,6 +31,18 @@ const NoteContainer = (): JSX.Element => {
     }
     setFilteredNotes(filterNotes);
   }, [notes, tags]);
+
+  useEffect(() => {
+    if (localStorage.getItem('Notes') && localStorage.getItem('Notes') !== '[]') {
+      const notesLS = JSON.parse(localStorage.getItem('Notes') as string);
+      dispatch(addNotes(notesLS));
+      console.log('start', localStorage.getItem('Notes'));
+    }
+
+    // return (): void => {
+    //   localStorage.setItem('Notes', JSON.stringify(notes));
+    // };
+  }, [dispatch]);
 
   return (
     <>
