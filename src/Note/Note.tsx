@@ -1,0 +1,66 @@
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import reactStringReplace from 'react-string-replace';
+import { nanoid } from 'nanoid';
+
+import ModalWindow from '../ModalWindow/ModalWindow';
+import NoteForm from '../NoteForm/NoteForm';
+import Tag from '../Tag/Tag';
+import { tagType, formType } from '../Constants/constants';
+import { deleteNote, selectNotes } from '../Redux/noteSlice';
+import { AppDispatch } from '../Redux/store';
+
+const Note = (props: { noteInf: INote }): JSX.Element => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const notes: INote[] = useSelector(selectNotes);
+
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+
+  const tags: ITag[] = props.noteInf.tags;
+
+  const handleDelete = async (): Promise<void> => {
+    const filterNotes: INote[] = notes.filter((note: INote) => note.id !== props.noteInf.id);
+    localStorage.setItem('Notes', JSON.stringify(filterNotes));
+
+    await dispatch(deleteNote(props.noteInf.id));
+  };
+
+  const handleModalClose = (): void => {
+    setModalOpen(false);
+  };
+
+  return (
+    <>
+      <div className="note-container">
+        <div className="wrapper">
+          <div className="note-title">{props.noteInf.title}</div>
+          <div className="note-btns">
+            <div className="edit" onClick={() => setModalOpen(true)}></div>
+            <div className="trash" onClick={handleDelete}></div>
+          </div>
+        </div>
+        <div className="note-content">
+          {reactStringReplace(props.noteInf.content, /#(\w+)/g, (match, i) => (
+            <span key={nanoid()} className="tag">
+              #{match}
+            </span>
+          ))}
+        </div>
+        <div className="note-tags">
+          {tags.length > 0 &&
+            tags.map((tag: ITag) => {
+              return <Tag key={tag.id} tag={tag.tag} type={tagType.withoutDelete} />;
+            })}
+        </div>
+      </div>
+      {isModalOpen && (
+        <ModalWindow onClick={handleModalClose}>
+          {<NoteForm type={formType.edit} noteInf={props.noteInf} />}
+        </ModalWindow>
+      )}
+    </>
+  );
+};
+
+export default Note;
