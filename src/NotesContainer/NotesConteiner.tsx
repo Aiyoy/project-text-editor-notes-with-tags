@@ -7,8 +7,6 @@ import { searchError } from '../Constants/constants';
 import { selectNotes, addNotes } from '../Redux/noteSlice';
 import { selectTags } from '../Redux/searchSlice';
 
-import './notesContainer.css';
-
 const NoteContainer = (): JSX.Element => {
   const dispatch = useDispatch();
 
@@ -17,13 +15,13 @@ const NoteContainer = (): JSX.Element => {
   const [filteredNotes, setFilteredNotes] = useState<INote[]>(notes);
 
   useEffect((): void => {
-    const curTags = tags.map((tag: ITag) => tag.tag);
+    const curTags: string[] = tags.map((tag: ITag) => tag.tag);
 
     let filterNotes: INote[] = notes;
 
     for (let i = 0; i < curTags.length; i++) {
       filterNotes = filterNotes.filter((note: INote) => {
-        const boolRes = note.tags.map((tag: ITag) => {
+        const boolRes: boolean[] = note.tags.map((tag: ITag) => {
           return curTags[i] === tag.tag;
         });
         return boolRes.includes(true);
@@ -32,7 +30,7 @@ const NoteContainer = (): JSX.Element => {
     setFilteredNotes(filterNotes);
   }, [notes, tags]);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (localStorage.getItem('Notes') && localStorage.getItem('Notes') !== '[]') {
       const notesLS = JSON.parse(localStorage.getItem('Notes') as string);
       dispatch(addNotes(notesLS));

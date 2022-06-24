@@ -1,7 +1,5 @@
 import { tagType } from '../Constants/constants';
 
-import './tag.css';
-
 const Tag = (props: {
   tag: string;
   type: string;
@@ -12,9 +10,7 @@ const Tag = (props: {
     <>
       <div className="tag-container">
         <div className="tag-text">{props.tag}</div>
-        {props.type === tagType.delete && (
-          <div className="tag-delete" onClick={props.onClick}></div>
-        )}
+        {props.type === tagType.delete && <div className="delete" onClick={props.onClick}></div>}
       </div>
     </>
   );

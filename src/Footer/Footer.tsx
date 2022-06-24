@@ -1,5 +1,3 @@
-import './footer.css';
-
 const Footer = (): JSX.Element => {
   const author = 'Veronika Yashchenkova';
   return (

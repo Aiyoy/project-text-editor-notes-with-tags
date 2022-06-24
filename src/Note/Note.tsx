@@ -10,8 +10,6 @@ import { tagType, formType } from '../Constants/constants';
 import { deleteNote, selectNotes } from '../Redux/noteSlice';
 import { AppDispatch } from '../Redux/store';
 
-import './note.css';
-
 const Note = (props: { noteInf: INote }): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -21,8 +19,8 @@ const Note = (props: { noteInf: INote }): JSX.Element => {
 
   const tags: ITag[] = props.noteInf.tags;
 
-  const handleDelete = async () => {
-    const filterNotes = notes.filter((note: INote) => note.id !== props.noteInf.id);
+  const handleDelete = async (): Promise<void> => {
+    const filterNotes: INote[] = notes.filter((note: INote) => note.id !== props.noteInf.id);
     localStorage.setItem('Notes', JSON.stringify(filterNotes));
 
     await dispatch(deleteNote(props.noteInf.id));
@@ -38,8 +36,8 @@ const Note = (props: { noteInf: INote }): JSX.Element => {
         <div className="wrapper">
           <div className="note-title">{props.noteInf.title}</div>
           <div className="note-btns">
-            <div className="note-btns_edit" onClick={() => setModalOpen(true)}></div>
-            <div className="note-btns_trash" onClick={handleDelete}></div>
+            <div className="edit" onClick={() => setModalOpen(true)}></div>
+            <div className="trash" onClick={handleDelete}></div>
           </div>
         </div>
         <div className="note-content">

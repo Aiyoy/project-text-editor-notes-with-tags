@@ -9,8 +9,6 @@ import SearchBar from '../SearchBar/SearchBar';
 
 import { addNoteText, formType } from '../Constants/constants';
 
-import './app.css';
-
 const App = (): JSX.Element => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 

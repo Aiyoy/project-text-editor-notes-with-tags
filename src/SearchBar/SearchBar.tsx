@@ -6,8 +6,6 @@ import Tag from '../Tag/Tag';
 import { addSearchTag, deleteSearchTag, selectTags } from '../Redux/searchSlice';
 import { searchPlaceholder, tagType } from '../Constants/constants';
 
-import './searchBar.css';
-
 const SearchBar: () => JSX.Element = (): JSX.Element => {
   const dispatch = useDispatch();
 
@@ -26,7 +24,7 @@ const SearchBar: () => JSX.Element = (): JSX.Element => {
     }
   }
 
-  const handleTagDelete = (id: string) => {
+  const handleTagDelete = (id: string): void => {
     dispatch(deleteSearchTag(id));
   };
 
@@ -44,7 +42,7 @@ const SearchBar: () => JSX.Element = (): JSX.Element => {
           onKeyDown={handleKeyDown}
         />
       </div>
-      <div className="search-tags">
+      <div className="search-tags-container">
         {!!tags.length &&
           tags.map((tag: ITag) => {
             return (

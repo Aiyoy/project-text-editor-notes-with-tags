@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import './header.css';
-
 const Header = (): JSX.Element => {
   const [navbar, setNavbar] = useState<boolean>(false);
 
@@ -16,8 +14,8 @@ const Header = (): JSX.Element => {
   window.addEventListener('scroll', setActiveNavbar);
 
   return (
-    <header className={navbar ? 'header header__active' : 'header'}>
-      <div className="header_logo"></div>
+    <header className={navbar ? 'header active' : 'header'}>
+      <div className="logo"></div>
     </header>
   );
 };

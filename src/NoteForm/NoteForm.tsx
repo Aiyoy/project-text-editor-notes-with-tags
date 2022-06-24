@@ -17,8 +17,6 @@ import {
   tagType,
 } from '../Constants/constants';
 
-import './noteForm.css';
-
 const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
   const notes: INote[] = useSelector(selectNotes);
 
@@ -30,7 +28,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
     clearErrors,
   } = useForm<INote>();
 
-  const id = props.noteInf?.id || nanoid();
+  const id: string = props.noteInf?.id || nanoid();
 
   const [title, setTitle] = useState<string>(() => {
     if (props.noteInf) {
@@ -63,7 +61,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleSubmite = async () => {
+  const handleSubmite = async (): Promise<void> => {
     const newNote: INote = {
       id: id,
       title: title,
@@ -74,8 +72,8 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
     if (props.type === formType.add) {
       localStorage.setItem('Notes', JSON.stringify(notes.concat(newNote)));
     } else {
-      const index = notes.findIndex((note: INote) => note.id === id);
-      const updateNotes = notes.slice();
+      const index: number = notes.findIndex((note: INote) => note.id === id);
+      const updateNotes: INote[] = notes.slice();
       updateNotes[index] = newNote;
       localStorage.setItem('Notes', JSON.stringify(updateNotes));
     }
@@ -89,7 +87,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
     clearErrors();
   };
 
-  const onKeyPressHandler = (event: React.KeyboardEvent<Element>) => {
+  const onKeyPressHandler = (event: React.KeyboardEvent<Element>): void => {
     if (event.key === ' ' && !!tag.length) {
       const newTag: ITag = {
         id: nanoid(),
@@ -100,8 +98,8 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
     }
   };
 
-  const handleTagDelete = (id: string) => {
-    const filterTags = tags.filter((tag: ITag) => tag.id !== id);
+  const handleTagDelete = (id: string): void => {
+    const filterTags: ITag[] = tags.filter((tag: ITag) => tag.id !== id);
     setTags(filterTags);
   };
 
@@ -117,7 +115,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
     setTags(unique([...tags, ...tagsFromText]));
   };
 
-  const unique = (arr: ITag[]) => {
+  const unique = (arr: ITag[]): ITag[] => {
     const result: string[] = [];
     const resultTags: ITag[] = [];
 
@@ -133,8 +131,8 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
   return (
     <>
       <form className="form" onSubmit={handleSubmit(handleSubmite)}>
-        <div className="form-element-wrapper">
-          <label className="form-label">
+        <div className="form-wrapper ">
+          <label className="label">
             {formLabel.title}
             <br />
             {props.type === formType.edit && !isTitleActive ? (
@@ -143,7 +141,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
               </div>
             ) : (
               <input
-                className="form-input"
+                className="input"
                 placeholder={formPlaceholder.title}
                 value={title}
                 type="text"
@@ -160,8 +158,10 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
           {errors.title && <p className="error">{errorText}</p>}
         </div>
 
-        <div className="form-element-wrapper">
-          <label className="form-label">
+        <div className="form-wrapper ">
+          <label className="label">
+            {formLabel.content}
+            <br />
             {props.type === formType.edit && !isContentActive ? (
               <div className="pseudo-textarea" onClick={() => setIsContentActive(true)}>
                 {reactStringReplace(content, /#(\w+)/g, (match, i) => (
@@ -172,7 +172,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
               </div>
             ) : (
               <textarea
-                className="form-textarea"
+                className="textarea"
                 placeholder={formPlaceholder.content}
                 value={content}
                 {...register('content', {
@@ -191,12 +191,12 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
           {errors.content && <p className="error">{errorText}</p>}
         </div>
 
-        <div className="form-element-wrapper">
-          <label className="form-label">
+        <div className="form-wrapper">
+          <label className="label">
             {formLabel.tags}
             <br />
             <input
-              className="form-input"
+              className="input"
               placeholder={formPlaceholder.tags}
               value={tag}
               type="text"
@@ -223,7 +223,7 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
             })}
         </div>
 
-        <button className="form-btn" type="submit">
+        <button className="btn" type="submit">
           {props.type === formType.add ? formBTNType.add : formBTNType.edit}
         </button>
       </form>

@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 import ReactDom from 'react-dom';
 
-import './modalWindow.css';
-
 const ModalWindow: (props: {
   children: JSX.Element;
   onClick: () => void;
@@ -24,7 +22,7 @@ const ModalWindow: (props: {
       >
         <div className="modal-window">
           <div
-            className="modal-window_close"
+            className="close"
             onClick={(event) => event.currentTarget === event.target && props.onClick()}
           ></div>
           {props.children}
