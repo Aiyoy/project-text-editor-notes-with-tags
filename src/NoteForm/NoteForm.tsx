@@ -71,6 +71,9 @@ const NoteForm = (props: { type: string; noteInf?: INote }): JSX.Element => {
 
     if (props.type === formType.add) {
       localStorage.setItem('Notes', JSON.stringify(notes.concat(newNote)));
+      setTitle('');
+      setContent('');
+      setTags([]);
     } else {
       const index: number = notes.findIndex((note: INote) => note.id === id);
       const updateNotes: INote[] = notes.slice();

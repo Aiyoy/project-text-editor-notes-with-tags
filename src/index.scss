@@ -1,5 +1,5 @@
-$dark-grey: #222222;
-$medium-grey: #4b4b4b;
+$dark-red: #662225;
+$medium-red: #b51d0a;
 $light-grey: #e8e8e8;
 $white: #ffffff;
 $font-size: 20px;
@@ -35,7 +35,7 @@ body {
     background-color: $white;
   }
   &::-webkit-scrollbar-thumb {
-    background: linear-gradient(0deg, $medium-grey, $dark-grey);
+    background: linear-gradient(0deg, $medium-red, $dark-red);
   }
 }
 
@@ -50,7 +50,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   min-height: 100vh;
-  color: $dark-grey;
+  color: $dark-red;
   font-size: $font-size;
 }
 
@@ -62,21 +62,21 @@ body {
 }
 
 .note-add {
-  width: $width;
+  width: 240px;
   height: $height;
   margin: 0px auto;
   display: flex;
   justify-content: center;
   column-gap: $min-height;
   border-radius: $height;
-  background-color: $medium-grey;
+  background-color: $medium-red;
   color: $white;
   font-weight: 500;
   line-height: $height;
   cursor: pointer;
 
   &:hover {
-    background-color: $dark-grey;
+    background-color: $dark-red;
   }
   &:active {
     transform: scale(1.05);
@@ -92,7 +92,7 @@ body {
   padding-left: $height;
   padding-right: $height;
   align-items: center;
-  background: linear-gradient(270deg, $medium-grey, $dark-grey);
+  background: linear-gradient(270deg, $medium-red, $dark-red);
   display: flex;
   color: $white;  
 }
@@ -107,7 +107,7 @@ body {
 }
 
 .header {
-  background: linear-gradient(90deg, $medium-grey, $dark-grey);
+  background: linear-gradient(90deg, $medium-red, $dark-red);
   display: flex;
   justify-content: flex-end;
   padding-left: $height;
@@ -273,7 +273,7 @@ body {
     border-radius: $min-padding;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: $medium-grey;
+    background-color: $medium-red;
     border-radius: $min-padding;
   }
 
@@ -304,11 +304,11 @@ body {
     cursor: text;
 
     &:hover {
-      border: $min-border solid $dark-grey;
+      border: $min-border solid $dark-red;
       outline: none;
     }
     &:focus {
-      border: $max-border solid $dark-grey;
+      border: $max-border solid $dark-red;
       outline: none;
     }
   }
@@ -330,11 +330,11 @@ body {
     cursor: text;
 
     &:hover {
-      border: $min-border solid $dark-grey;
+      border: $min-border solid $dark-red;
       outline: none;
     }
     &:focus {
-      border: $max-border solid $dark-grey;
+      border: $max-border solid $dark-red;
       outline: none;
     }
   }
@@ -347,7 +347,7 @@ body {
     justify-content: center;
     column-gap: $min-height;
     border-radius: $height;
-    background-color: $medium-grey;
+    background-color: $medium-red;
     font-size: $font-size;
     color: $white;
     font-weight: 500;
@@ -355,7 +355,7 @@ body {
     cursor: pointer;
   
     &:hover {
-      background-color: $dark-grey;
+      background-color: $dark-red;
     }
     &:active {
       transform: scale(1.05);
@@ -394,16 +394,16 @@ body {
   height: 40px;
   padding-left: 15px;
   border-radius: 20px;
-  color: #222222;
+  color: $dark-red;
   font-size: 20px;
-  border: 1px solid #3c3c3c;
+  border: 1px solid $light-grey;
   cursor: text;
 
   &:focus {
-    border: $min-border solid $dark-grey;
+    border: $min-border solid $dark-red;
   }
   &:active {
-    border: $max-border solid $dark-grey;
+    border: $max-border solid $dark-red;
   }
 }
 
@@ -423,8 +423,8 @@ body {
   min-height: 20px;
   line-height: 40px;
   border-radius: 20px;
-  background-color: #3c3c3c;
-  color: #ffffff;
+  background-color: $dark-red;
+  color: $white;
   padding: 0px 10px;
   margin-bottom: 10px;
   align-items: center;
